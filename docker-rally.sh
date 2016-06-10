@@ -22,6 +22,18 @@ if [ ! -f /etc/apt/sources.list.d/docker.list ] ; then
     sudo apt-get install -y apparmor
 fi
 
+# Setup ssh
+if [ ! -f ~/.ssh/id_rsa.pub ] ; then
+    ssh-keygen -t rsa -f ~/.ssh/id_rsa -N ''
+fi
+
+# Add public key to authorized_keys
+OVNKEY="$(cat ~/.ssh/id_rsa.pub | cut -d " " -f 2)"
+OVNKEYTHERE=$(grep $OVNKEY ~/.ssh/authorized_keys)
+if [ "$OVNKEYTHERE" == "" ] ; then
+    cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+fi
+
 # Install the docker engine
 sudo apt-get install -y docker-engine
 sudo service docker start
