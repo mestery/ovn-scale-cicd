@@ -34,6 +34,22 @@ if [ "$OVNKEYTHERE" == "" ] ; then
     cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 fi
 
+# Setup ssh
+sudo su root <<'EOF'
+if [ ! -f /root/.ssh/id_rsa.pub ] ; then
+    ssh-keygen -t rsa -f /root/.ssh/id_rsa -N ''
+fi
+EOF
+
+# Add public key to authorized_keys
+sudo su -m root <<'EOF'
+OVNKEY="$(cat /root/.ssh/id_rsa.pub | cut -d " " -f 2)"
+OVNKEYTHERE=$(grep $OVNKEY $HOME/.ssh/authorized_keys)
+if [ "$OVNKEYTHERE" == "" ] ; then
+    cat /root/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
+fi
+EOF
+
 # Install the docker engine
 sudo apt-get install -y docker-engine
 sudo service docker start
