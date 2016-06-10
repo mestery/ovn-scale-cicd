@@ -1,5 +1,6 @@
 #!/bin/bash
 
+CUR_DIR=$(pwd)
 OVN_DOCKER_ROOT=${OVN_DOCKER_ROOT:-~/ovn-docker}
 
 OVN_SCALE_REPO=${OVN_SCALE_REPO:-https://github.com/openvswitch/ovn-scale-test.git}
@@ -7,8 +8,8 @@ OVN_SCALE_REPO_NAME=$(basename ${OVN_SCALE_REPO} | cut -f1 -d'.')
 OVN_SCALE_BRANCH=${OVN_SCALE_BRANCH:-origin/master}
 
 # The hosts file to use
-OVN_DOCKER_HOSTS=${OVN_DOCKER_HOSTS:-./ansible/docker-ovn-hosts}
-OVN_DOCKER_VARS=${OVN_DOCKER_VARS:-./ansible/all.yml}
+OVN_DOCKER_HOSTS=${OVN_DOCKER_HOSTS:-$CUR_DIR/ansible/docker-ovn-hosts}
+OVN_DOCKER_VARS=${OVN_DOCKER_VARS:-$CUR_DIR/ansible/all.yml}
 
 # Install prerequisites
 sudo apt-get install -y apt-transport-https ca-certificates
