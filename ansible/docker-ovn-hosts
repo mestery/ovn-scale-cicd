@@ -1,13 +1,13 @@
 # You should only add one IP address in this role. The node in this role runs
 # the OVN databse container
 [ovn-database]
-192.168.0.35
+192.168.0.36
 
 # Add host IPs to run emulated OVN chassis
 [emulation-hosts]
 #9.2.211.193    provider_ip=9.2.211.193
-192.168.0.35   provider_ip=192.168.0.35
-#192.168.0.36   provider_ip=192.168.0.36
+#192.168.0.35   provider_ip=192.168.0.35
+192.168.0.36   provider_ip=192.168.0.36
 
 [rally]
-192.168.0.35
+192.168.0.36
