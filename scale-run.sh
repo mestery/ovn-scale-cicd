@@ -3,6 +3,9 @@
 # Read variables
 source ovn-scale.conf
 
+OVS_REPO=$1
+OVS_BRANCH=$2
+
 mkdir -p $OVN_DOCKER_ROOT
 pushd $OVN_DOCKER_ROOT
 
@@ -23,7 +26,8 @@ popd
 
 # Deploy the containers
 pushd $OVN_SCALE_REPO_NAME
-sudo /usr/local/bin/ansible-playbook -i $OVN_DOCKER_HOSTS ansible/site.yml -e @$OVN_DOCKER_VARS -e action=deploy
+sudo /usr/local/bin/ansible-playbook -i $OVN_DOCKER_HOSTS ansible/site.yml -e @$OVN_DOCKER_VARS \
+     --extra-vars "ovs_repo=$OVS_REPO" --extra-vars "ovs_branch=$OVS_BRANCH" -e action=deploy
 popd
 
 # Create the rally deployment
